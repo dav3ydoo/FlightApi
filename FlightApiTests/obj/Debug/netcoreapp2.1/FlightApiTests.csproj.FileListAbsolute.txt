@@ -1,0 +1,14 @@
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\FlightApiTests.deps.json
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\FlightApiTests.runtimeconfig.json
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\FlightApiTests.runtimeconfig.dev.json
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\FlightApiTests.dll
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\bin\Debug\netcoreapp2.1\FlightApiTests.pdb
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.csprojAssemblyReference.cache
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.csproj.CoreCompileInputs.cache
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.AssemblyInfoInputs.cache
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.AssemblyInfo.cs
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.dll
+C:\Users\davee\Documents\git\FlightApi\FlightApiTests\obj\Debug\netcoreapp2.1\FlightApiTests.pdb
