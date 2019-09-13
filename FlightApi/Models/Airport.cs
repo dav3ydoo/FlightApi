@@ -8,14 +8,13 @@ namespace FlightApi.Models
 {
     public class Airport
     {
+        private Dictionary<string, Flight> DestinationToFlightDictionary;
         public string Name { get; private set; }
         public string City { get; private set; }
         public string Country { get; private set; }
         public string Iata3 { get; private set; }
         public string Latitude { get; private set; }
         public string Longitude { get; private set; }
-
-        private Dictionary<string, Flight> DestinationToFlightDictionary;
 
         public Airport(string name, string city, string country, string iata3, string latitude, string longitude)
         {
@@ -46,10 +45,11 @@ namespace FlightApi.Models
             return Iata3.GetHashCode();
         }
 
-        public void AddFlight(Airport destination)
+        public Flight AddFlight(Airport destination)
         {
             var flight = new Flight(this, destination);
             DestinationToFlightDictionary.TryAdd(destination.Iata3, flight);
+            return flight;
         }
 
         public List<Flight> GetFlights()

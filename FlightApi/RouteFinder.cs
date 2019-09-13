@@ -10,6 +10,11 @@ namespace FlightApi
     {
         public List<Flight> FindShortestRoute(Airport origin, Airport destination)
         {
+            if (origin == null || destination == null)
+            {
+                return null;
+            }
+
             HashSet<Airport> visited = new HashSet<Airport>();
             Queue<List<Flight>> queue = new Queue<List<Flight>>();
 

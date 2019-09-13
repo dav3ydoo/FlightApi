@@ -19,22 +19,5 @@ namespace FlightApi.Models
             Iata3 = iata3;
             Country = country;
         }
-
-        public override bool Equals(Object obj)
-        {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-            else
-            {
-                Airline a = (Airline)obj;
-                return AirlineId == a.AirlineId;
-            }
-        }
-        public override int GetHashCode()
-        {
-            return AirlineId.GetHashCode();
-        }
     }
 }

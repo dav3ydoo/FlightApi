@@ -62,6 +62,7 @@ namespace FlightApi
 
         private void AddTestData(IAirportsRepository airportsRepository)
         {
+            // Note: Did not make user of airlines.csv.  Originally, I included this in the flight model but decided to keep my submission as simple as possible.
             var airportsReader = new StreamReader(AIRPORTS_CSV_LOCATION);
             var airportsCsv = new CsvReader(airportsReader);
             var airportsCsvRecords = airportsCsv.GetRecords<AirportCsv>();

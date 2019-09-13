@@ -15,10 +15,10 @@ namespace FlightApi.Repositories
             AirportDictionary = new Dictionary<string, Airport>();
         }
 
-        public void AddAirport(string name, string city, string country, string iata3, string latitude, string longitude)
+        public bool AddAirport(string name, string city, string country, string iata3, string latitude, string longitude)
         {
             var airport = new Airport(name, city, country, iata3, latitude, longitude);
-            AirportDictionary.TryAdd(iata3, airport);
+            return AirportDictionary.TryAdd(iata3, airport);
         }
 
         public Airport GetAirport(string iata3)

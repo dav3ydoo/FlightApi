@@ -23,10 +23,10 @@ namespace FlightApi.Controllers
             _airportsRepository = airportsRepository;
         }
 
-        // TODO: make async.
+        // TODO: Make async.
         // GET api/find_route?origin={origin}&destination={destination}
         [HttpGet("find_route")]
-        public ActionResult<string> Get(string origin, string destination)
+        public IActionResult Get(string origin, string destination)
         {
             var originAirport = _airportsRepository.GetAirport(origin);
 
@@ -49,7 +49,7 @@ namespace FlightApi.Controllers
                 return NotFound("No route exists between origin [" + origin + "] and destination [" + destination + "].");
             }
 
-            return JsonConvert.SerializeObject(shortestRoute);
+            return Ok(JsonConvert.SerializeObject(shortestRoute));
         }
     }
 }

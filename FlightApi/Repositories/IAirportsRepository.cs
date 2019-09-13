@@ -8,7 +8,7 @@ namespace FlightApi.Repositories
 {
     public interface IAirportsRepository
     {
-        void AddAirport(string name, string city, string country, string iata3, string latitude, string longitude);
+        bool AddAirport(string name, string city, string country, string iata3, string latitude, string longitude);
 
         Airport GetAirport(string iata3);
     }
