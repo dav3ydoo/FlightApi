@@ -9,11 +9,7 @@ namespace FlightApiTests
     public class RouteFinderTests
     {
         private IRouteFinder _subject;
-        Airport _airport1;
-        Airport _airport2;
-        Airport _airport3;
-        Airport _airport4;
-        Airport _airport5;
+        Airport _airport1, _airport2, _airport3, _airport4, _airport5;
 
         [TestInitialize]
         public void Initialize()
