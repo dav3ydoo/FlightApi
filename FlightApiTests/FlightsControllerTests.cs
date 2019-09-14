@@ -8,6 +8,7 @@ using FlightApi.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FlightApiTests
 {
@@ -27,7 +28,7 @@ namespace FlightApiTests
         }
 
         [TestMethod]
-        public void FindRouteTest()
+        public async Task FindRouteTest()
         {
             var origin = "AAA";
             var destination = "BBB";
@@ -40,18 +41,18 @@ namespace FlightApiTests
 
             var flightList = new List<Flight> { new Flight(originAirport, destinationAirport) };
 
-            _routeFinder.FindShortestRoute(originAirport, destinationAirport).Returns(flightList);
+            _routeFinder.FindShortestRouteAsync(originAirport, destinationAirport).Returns(flightList);
 
             var expectedValue = JsonConvert.SerializeObject(flightList);
 
-            var objectResult = _subject.Get(origin, destination) as ObjectResult;
+            var objectResult = await _subject.Get(origin, destination) as ObjectResult;
 
             Assert.AreEqual(objectResult.StatusCode, 200);
             Assert.AreEqual(objectResult.Value, expectedValue);
         }
 
         [TestMethod]
-        public void FindRouteInvalidOriginTest()
+        public async Task FindRouteInvalidOriginTest()
         {
             var origin = "AAA";
             var destination = "BBB";
@@ -62,14 +63,14 @@ namespace FlightApiTests
             _airportsRepository.GetAirport(origin).Returns((Airport)null);
             _airportsRepository.GetAirport(destination).Returns(destinationAirport);
 
-            var objectResult = _subject.Get(origin, destination) as ObjectResult;
+            var objectResult = await _subject.Get(origin, destination) as ObjectResult;
 
             Assert.AreEqual(objectResult.StatusCode, 400);
             Assert.AreEqual(objectResult.Value, "Invalid origin [" + origin + "].");
         }
 
         [TestMethod]
-        public void FindRouteInvalidDestinationTest()
+        public async Task FindRouteInvalidDestinationTest()
         {
             var origin = "AAA";
             var destination = "BBB";
@@ -80,14 +81,14 @@ namespace FlightApiTests
             _airportsRepository.GetAirport(origin).Returns(originAirport);
             _airportsRepository.GetAirport(destination).Returns((Airport)null);
 
-            var objectResult = _subject.Get(origin, destination) as ObjectResult;
+            var objectResult = await _subject.Get(origin, destination) as ObjectResult;
 
             Assert.AreEqual(objectResult.StatusCode, 400);
             Assert.AreEqual(objectResult.Value, "Invalid destination [" + destination + "].");
         }
 
         [TestMethod]
-        public void FindRouteWhereRouteIsNotFoundTest()
+        public async Task FindRouteWhereRouteIsNotFoundTest()
         {
             var origin = "AAA";
             var destination = "BBB";
@@ -98,9 +99,9 @@ namespace FlightApiTests
             _airportsRepository.GetAirport(origin).Returns(originAirport);
             _airportsRepository.GetAirport(destination).Returns(destinationAirport);
 
-            _routeFinder.FindShortestRoute(originAirport, destinationAirport).Returns((List<Flight>)null);
+            _routeFinder.FindShortestRouteAsync(originAirport, destinationAirport).Returns((List<Flight>)null);
 
-            var objectResult = _subject.Get(origin, destination) as ObjectResult;
+            var objectResult = await _subject.Get(origin, destination) as ObjectResult;
 
             Assert.AreEqual(objectResult.StatusCode, 404);
             Assert.AreEqual(objectResult.Value, "No route exists between origin [" + origin + "] and destination [" + destination + "].");

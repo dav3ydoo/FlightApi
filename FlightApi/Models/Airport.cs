@@ -8,7 +8,8 @@ namespace FlightApi.Models
 {
     public class Airport
     {
-        private Dictionary<string, Flight> DestinationToFlightDictionary;
+        // Departing flights by IATA 3 code.
+        private Dictionary<string, Flight> DepartingFlightsDictionary;
         public string Name { get; private set; }
         public string City { get; private set; }
         public string Country { get; private set; }
@@ -24,37 +25,25 @@ namespace FlightApi.Models
             Iata3 = iata3;
             Latitude = latitude;
             Longitude = longitude;
-            DestinationToFlightDictionary = new Dictionary<string, Flight>();
+            DepartingFlightsDictionary = new Dictionary<string, Flight>();
         }
 
-        public override bool Equals(Object obj)
+        /// <summary>
+        /// Adds departing flight to this airport instance.  
+        /// </summary>
+        /// <returns>True if added. False if already exists.</returns>
+        public bool AddDepartingFlight(Airport destination)
         {
-            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
-            {
-                return false;
-            }
-            else
-            {
-                Airport a = (Airport)obj;
-                return Iata3 == a.Iata3;
-            }
+            return DepartingFlightsDictionary.TryAdd(destination.Iata3, new Flight(this, destination));
         }
 
-        public override int GetHashCode()
+        /// <summary>
+        /// Gets list of departing flights for this airport instance.  
+        /// </summary>
+        /// <returns>List of departing flights.</returns>
+        public List<Flight> GetDepartingFlights()
         {
-            return Iata3.GetHashCode();
-        }
-
-        public Flight AddFlight(Airport destination)
-        {
-            var flight = new Flight(this, destination);
-            DestinationToFlightDictionary.TryAdd(destination.Iata3, flight);
-            return flight;
-        }
-
-        public List<Flight> GetFlights()
-        {
-            return DestinationToFlightDictionary.Values.ToList<Flight>();
+            return DepartingFlightsDictionary.Values.ToList<Flight>();
         }
     }
 }

@@ -23,10 +23,14 @@ namespace FlightApi.Controllers
             _airportsRepository = airportsRepository;
         }
 
-        // TODO: Make async.
+        /// <summary>
+        /// Finds the shortest route between an origin and destination airport.
+        /// </summary>
+        /// <param name="origin">Departure airport represented as IATA 3 code.</param>
+        /// <param name="destination">Arrival airport represented as IATA 3 code.</param>
         // GET api/find_route?origin={origin}&destination={destination}
         [HttpGet("find_route")]
-        public IActionResult Get(string origin, string destination)
+        public async Task<IActionResult> Get(string origin, string destination)
         {
             var originAirport = _airportsRepository.GetAirport(origin);
 
@@ -42,7 +46,7 @@ namespace FlightApi.Controllers
                 return BadRequest("Invalid destination [" + destination + "].");
             }
 
-            var shortestRoute = _routeFinder.FindShortestRoute(originAirport, destinationAirport);
+            var shortestRoute = await _routeFinder.FindShortestRouteAsync(originAirport, destinationAirport);
 
             if (shortestRoute == null)
             {

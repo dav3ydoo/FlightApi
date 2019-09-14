@@ -34,7 +34,6 @@ namespace FlightApi
         {
             services.AddSingleton(typeof(IAirportsRepository), typeof(AirportsRepository));
             services.AddTransient(typeof(IRouteFinder), typeof(RouteFinder));
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -54,15 +53,17 @@ namespace FlightApi
 
             IAirportsRepository airportsRepository = app.ApplicationServices.GetService<IAirportsRepository>();
 
-            AddTestData( airportsRepository);
+            LoadCsvData( airportsRepository);
 
             app.UseMvc();
 
         }
 
-        private void AddTestData(IAirportsRepository airportsRepository)
+        private void LoadCsvData(IAirportsRepository airportsRepository)
         {
             // Note: Did not make user of airlines.csv.  Originally, I included this in the flight model but decided to keep my submission as simple as possible.
+
+            // Get airports.
             var airportsReader = new StreamReader(AIRPORTS_CSV_LOCATION);
             var airportsCsv = new CsvReader(airportsReader);
             var airportsCsvRecords = airportsCsv.GetRecords<AirportCsv>();
@@ -72,6 +73,7 @@ namespace FlightApi
                 airportsRepository.AddAirport(record.Name, record.City, record.Country, record.ThreeDigitCode, record.Latitude, record.Longitude);
             }
 
+            // Get routes.
             var routesReader = new StreamReader(ROUTES_CSV_LOCATION);
             var routesCsv = new CsvReader(routesReader);
             var routesCsvRecords = routesCsv.GetRecords<RouteCsv>();
@@ -80,7 +82,7 @@ namespace FlightApi
             {
                 var originAirport = airportsRepository.GetAirport(record.Origin);
                 var destinationAirport = airportsRepository.GetAirport(record.Destination);
-                originAirport.AddFlight(destinationAirport);
+                originAirport.AddDepartingFlight(destinationAirport);
             }
         }
     }

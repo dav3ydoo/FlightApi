@@ -2,6 +2,7 @@
 using FlightApi.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FlightApiTests
 {
@@ -19,81 +20,86 @@ namespace FlightApiTests
         }
 
         [TestMethod]
-        public void FindShortestRouteTest()
+        public async Task FindShortestRouteTest()
         {
-            var flight1 = _airport1.AddFlight(_airport2);
-            var flight2 = _airport2.AddFlight(_airport3);
-            var flight3 =_airport3.AddFlight(_airport4);
-            var flight4 =_airport4.AddFlight(_airport5);
+            _airport1.AddDepartingFlight(_airport2);
+            _airport2.AddDepartingFlight(_airport3);
+            _airport3.AddDepartingFlight(_airport4);
+            _airport4.AddDepartingFlight(_airport5);
 
-            var route = _subject.FindShortestRoute(_airport1, _airport5);
+            var route = await _subject.FindShortestRouteAsync(_airport1, _airport5);
 
-            Assert.AreEqual(route[0], flight1);
-            Assert.AreEqual(route[1], flight2);
-            Assert.AreEqual(route[2], flight3);
-            Assert.AreEqual(route[3], flight4);
+            Assert.AreEqual(route[0].Origin, _airport1);
+            Assert.AreEqual(route[0].Destination, _airport2);
+            Assert.AreEqual(route[1].Origin, _airport2);
+            Assert.AreEqual(route[1].Destination, _airport3);
+            Assert.AreEqual(route[2].Origin, _airport3);
+            Assert.AreEqual(route[2].Destination, _airport4);
+            Assert.AreEqual(route[3].Origin, _airport4);
+            Assert.AreEqual(route[3].Destination, _airport5);
 
         }
 
         [TestMethod]
-        public void FindShortestRouteNullOriginTest()
+        public async Task FindShortestRouteNullOriginTest()
         {
-            _airport1.AddFlight(_airport2);
-            _airport2.AddFlight(_airport3);
+            _airport1.AddDepartingFlight(_airport2);
+            _airport2.AddDepartingFlight(_airport3);
 
-            var route = _subject.FindShortestRoute(null, _airport3);
+            var route = await _subject.FindShortestRouteAsync(null, _airport3);
             Assert.IsNull(route);
         }
 
         [TestMethod]
-        public void FindShortestRouteNullDestintionTest()
+        public async Task FindShortestRouteNullDestintionTest()
         {
-            _airport1.AddFlight(_airport2);
-            _airport2.AddFlight(_airport3);
+            _airport1.AddDepartingFlight(_airport2);
+            _airport2.AddDepartingFlight(_airport3);
 
-            var route = _subject.FindShortestRoute(_airport1, null);
+            var route = await _subject.FindShortestRouteAsync(_airport1, null);
             Assert.IsNull(route);
         }
 
         [TestMethod]
-        public void FindShortestRouteDirectFlightTest()
+        public async Task FindShortestRouteDirectFlightTest()
         {
-            var flight1 = _airport1.AddFlight(_airport2);
-            var route = _subject.FindShortestRoute(_airport1, _airport2);
+            var flight1 = _airport1.AddDepartingFlight(_airport2);
+            var route = await _subject.FindShortestRouteAsync(_airport1, _airport2);
 
-            Assert.AreEqual(route[0], flight1);
+            Assert.AreEqual(route[0].Origin, _airport1);
+            Assert.AreEqual(route[0].Destination, _airport2);
         }
 
         [TestMethod]
-        public void FindShortestRouteNoRouteTest()
+        public async Task FindShortestRouteNoRouteTest()
         {
-            _airport1.AddFlight(_airport2);
-            _airport2.AddFlight(_airport3);
+            _airport1.AddDepartingFlight(_airport2);
+            _airport2.AddDepartingFlight(_airport3);
 
-            var route = _subject.FindShortestRoute(_airport1, _airport5);
+            var route = await _subject.FindShortestRouteAsync(_airport1, _airport5);
             Assert.IsNull(route);
         }
 
         [TestMethod]
-        public void FindShortestRouteWithNoRouteTest()
+        public async Task FindShortestRouteWithNoRouteTest()
         {
-            var flight1 = _airport1.AddFlight(_airport2);
-            var flight2 = _airport2.AddFlight(_airport3);
-            var flight4 = _airport4.AddFlight(_airport5);
+            var flight1 = _airport1.AddDepartingFlight(_airport2);
+            var flight2 = _airport2.AddDepartingFlight(_airport3);
+            var flight4 = _airport4.AddDepartingFlight(_airport5);
 
-            var route = _subject.FindShortestRoute(_airport1, _airport5);
+            var route = await _subject.FindShortestRouteAsync(_airport1, _airport5);
             Assert.IsNull(route);
         }
 
         [TestMethod]
-        public void FindShortestRouteWithCycleTest()
+        public async Task FindShortestRouteWithCycleTest()
         {
-            var flight1 = _airport1.AddFlight(_airport2);
-            var flight2 = _airport2.AddFlight(_airport3);
-            var flight3 = _airport3.AddFlight(_airport1);
-            var flight4 = _airport4.AddFlight(_airport5);
+            var flight1 = _airport1.AddDepartingFlight(_airport2);
+            var flight2 = _airport2.AddDepartingFlight(_airport3);
+            var flight3 = _airport3.AddDepartingFlight(_airport1);
+            var flight4 = _airport4.AddDepartingFlight(_airport5);
 
-            var route = _subject.FindShortestRoute(_airport1, _airport5);
+            var route = await _subject.FindShortestRouteAsync(_airport1, _airport5);
             Assert.IsNull(route);
         }
 

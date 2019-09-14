@@ -1,10 +1,11 @@
 ﻿using FlightApi.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FlightApi
 {
     public interface IRouteFinder
     {
-        List<Flight> FindShortestRoute(Airport origin, Airport destination);
+        Task<List<Flight>> FindShortestRouteAsync(Airport origin, Airport destination);
     }
 }

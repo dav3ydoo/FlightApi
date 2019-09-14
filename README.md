@@ -6,7 +6,6 @@
 
 # Future Considerations
 - Host API to public
-- Aync methods 
 - Caching
 - More unit tests 
 - Integration tests

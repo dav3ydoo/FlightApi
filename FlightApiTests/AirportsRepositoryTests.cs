@@ -57,7 +57,7 @@ namespace FlightApiTests
             var lon = "2";
 
             _subject.AddAirport(name, city, country, iata3, lat, lon);
-            var airport = _subject.GetAirport("AAA");
+            var airport = _subject.GetAirport(iata3);
 
             Assert.AreEqual(airport.Name, name);
             Assert.AreEqual(airport.City, city);
